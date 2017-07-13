@@ -8,7 +8,7 @@
 <body>
     <h1 class="center">Hola mundo, conozcan los nuevos planetas</h1>
     <!--codigo materialize para las tarjetas de los planetas-->
-    <div class="container">
+    <div class="container" id="planetasContenedor">
         <div class="row" id="planetas">
           </div>
       </div>
@@ -29,18 +29,65 @@
                     } 
               })
          }
-            getJSON('data/earth-like-results.json')         .then(function(mensaje){
-                return getJSON(mensaje.results.forEach(function(planetas){
-                    getJSON(planetas).then(function(planetas){
-                    console.log(planetas)})
+         
+         var contador= 0;
+         
+            getJSON('data/earth-like-results.json').then(function(mensaje){
+                    return getJSON(mensaje.results.forEach(function(planeta){
+                        getJSON(planeta).then(function(resultado){
+                        console.log(resultado);
+                        imprimePlanetas(resultado);
+                    })
                 }))
             });
          
+         function imprimePlanetas(resultado){
+                contador++;
+                var sectionPlanetas = document.getElementById('planetasContenedor');
+                var div = document.createElement("div");
+                //div.className("row");
+                var h5 = document.createElement('h5');
+                var anuo = document.createElement('p');
+                var anuosLuz = document.createElement('p');
+                var telescopio = document.createElement('p');
+                var imagen = document.createElement('img');
+             
+                h5.innerText = resultado.pl_name;
+                anuo.innerText = resultado.st_age;
+                anuosLuz.innerText = resultado.st_dist;
+                telescopio.innerText = resultado.pl_telescope;
+                imagen.src = 'static/img/planeta' + contador + '.jpg';
+                imagen.className = "pd-lft";
+                
+                
+             
+                sectionPlanetas.appendChild(div);
+                div.appendChild(h5);
+                div.appendChild(anuo);
+                div.appendChild(anuosLuz);
+                div.appendChild(telescopio);
+                //div.appendChild(imagen).src="static/img/kepler.jpg";
+                div.appendChild(imagen);
+             
+         }
+         
+//         var crearImagenes = function(imagenesPlanetas){
+//             imagenesPlanetas.forEach(function(imagen))
+//         }
+//         var imagenesPlanetas = ['static/img/kepler.jpg', 'static/img/planeta1.jpg','static/img/planeta3.jpg',
+//                                 'static/planeta4.jpg', 'static/img/planeta5', 'static/img/planeta6',
+//                                 'static/planeta7.jpg', 'static/img/planeta8'
+//             
+//         ] 
+         
+         
+               
+//         //Este código de plantilla por alguna razòn no se presenta en el DOM
 //        var plantillaPlanetas= '<div class="col s12 m7">'+
 //              '<div class="card center">'+
 //                '<div class="card-image">'+
 //                  '<img src="static/img/kepler.jpg" class="imagenPlanetas">'+
-//                  '<span class="card-title">__nombrePlaneta__</span>
+//                  '<span class="card-title">__nombrePlaneta__</span>' + 
 //                '</div>'+
 //                '<div class="card-content">'+
 //                  '<p>__discover__</p>'+
@@ -52,28 +99,28 @@
 //                  '<a href="#">__link__</a>'
 //                '</div>'+
 //              '</div>'+
-//            '</div>'+;
+//            '</div>'
 //                
 //        
 //         var obtenerDatos = function(planetas){
-//         var nombre = planetas.pl_name;
-//         var descubierto = planetas.pl_dic;
-//         var numPlaneta = planetas.pl_mnum;
-//         var radio = planetas.st_rad;
-//         var nombreCientifico=planetas.st_spstr;
-//         var link = planetas.pl_pelink;
-//         var plantillaFinal="";
-//             
-//        plantillaFinal+=plantillaPlanetas.replace('__nombrePlaneta__',nombre)
-//		 .replace('__discover__',descubierto)
-//		 .replace('__planetNumber__',numPlaneta)
-//		 .replace('__radio__',radio)
-//		 .replace('__nombreCientifico__', nombreCientifico)
-//		 .replace('__link__',link);
-//		 var presentar=document.getElementById("#planetas");
-//             presentar.html(plantillaFinal);
+//             console.log(planetas.pl_dic)
+//             var nombre = planetas.pl_name;
+//             var descubierto = planetas.pl_dic;
+//             var numPlaneta = planetas.pl_mnum;
+//             var radio = planetas.st_rad;
+//             var nombreCientifico=planetas.st_spstr;
+//             var link = planetas.pl_pelink;
+//
+//            plantillaFinal+=plantillaPlanetas.replace('__nombrePlaneta__',nombre)
+//             .replace('__discover__',descubierto)
+//             .replace('__planetNumber__',numPlaneta)
+//             .replace('__radio__',radio)
+//             .replace('__nombreCientifico__', nombreCientifico)
+//             .replace('__link__',link);
+//             var presentar=document.getElementById("planetas");
+//                 presentar.innerHtml(plantillaFinal);
 //         }
-//        
+        
     </script>
      <script src="static/jquery/dist/jquery.min.js"></script>
      <script src="static/materialize-css/dist/js/materialize.min.js"></script>
