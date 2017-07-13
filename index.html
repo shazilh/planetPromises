@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promises consumiendo la API de planetas</title>
+    <link rel="stylesheet" type="text/css" href="static/materialize-css/dist/css/materialize.min.css">
+</head>
+<body>
+    <h1 class="center">Hola mundo, conozcan los nuevos planetas</h1>
+    <!--codigo materialize para las tarjetas de los planetas-->
+    <div class="container">
+        <div class="row" id="planetas">
+          </div>
+      </div>
+      <!--codigo materialize para las tarjetas de los planetas-->
+     
+     <script>
+         function getJSON(url){
+             return new Promise(function(resolve,reject){
+                var ajax= new XMLHttpRequest();
+                
+                ajax.open("GET", url);
+                ajax.send();
+
+                ajax.onreadystatechange = function (data){
+                     if (ajax.readyState ==4){
+                         resolve(JSON.parse(ajax.responseText));
+                        }
+                    } 
+              })
+         }
+            getJSON('data/earth-like-results.json')         .then(function(mensaje){
+                return getJSON(mensaje.results.forEach(function(planetas){
+                    getJSON(planetas).then(function(planetas){
+                    console.log(planetas)})
+                }))
+            });
+         
+//        var plantillaPlanetas= '<div class="col s12 m7">'+
+//              '<div class="card center">'+
+//                '<div class="card-image">'+
+//                  '<img src="static/img/kepler.jpg" class="imagenPlanetas">'+
+//                  '<span class="card-title">__nombrePlaneta__</span>
+//                '</div>'+
+//                '<div class="card-content">'+
+//                  '<p>__discover__</p>'+
+//                  '<p>__planetNumber__</p>'+
+//                  '<p>__radio__</p>'+
+//                  '<p>__nombreCientifico__</p>'+
+//                '</div>'
+//                '<div class="card-action">'+
+//                  '<a href="#">__link__</a>'
+//                '</div>'+
+//              '</div>'+
+//            '</div>'+;
+//                
+//        
+//         var obtenerDatos = function(planetas){
+//         var nombre = planetas.pl_name;
+//         var descubierto = planetas.pl_dic;
+//         var numPlaneta = planetas.pl_mnum;
+//         var radio = planetas.st_rad;
+//         var nombreCientifico=planetas.st_spstr;
+//         var link = planetas.pl_pelink;
+//         var plantillaFinal="";
+//             
+//        plantillaFinal+=plantillaPlanetas.replace('__nombrePlaneta__',nombre)
+//		 .replace('__discover__',descubierto)
+//		 .replace('__planetNumber__',numPlaneta)
+//		 .replace('__radio__',radio)
+//		 .replace('__nombreCientifico__', nombreCientifico)
+//		 .replace('__link__',link);
+//		 var presentar=document.getElementById("#planetas");
+//             presentar.html(plantillaFinal);
+//         }
+//        
+    </script>
+     <script src="static/jquery/dist/jquery.min.js"></script>
+     <script src="static/materialize-css/dist/js/materialize.min.js"></script>
+     
+     
+</body>
+</html>
